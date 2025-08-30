@@ -6,8 +6,9 @@ import { NextResponse } from "next/server";
 
 
 //GET /repos/{owner}/{repo}
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(req: Request, context: any) {
     try {
+        const { params } = context as { params: { id: string } };
         const session = await getServerSession(authOptions);
         const email = session?.user?.email;
         if (!session || !email) {
