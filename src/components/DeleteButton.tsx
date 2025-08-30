@@ -5,11 +5,9 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Loader2, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 import deleteRepo from '@/actions/delete_repo';
-import { useRouter } from 'next/navigation';
 
 function DeleteButton( {repoId,onDelete}:{repoId:string,onDelete:()=>void} ) {
     const [isPending, startTransition] = useTransition();
-    const router = useRouter();
 
     const handleDeleteRepo= ()=>{
         startTransition(async()=>{

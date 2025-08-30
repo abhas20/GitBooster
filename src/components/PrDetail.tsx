@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { aiAnalysis } from '@/actions/ai_action';
-import { prisma } from '@/db/prisma';
 
 type prop={
     prs:any[];
