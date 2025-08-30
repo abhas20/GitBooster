@@ -1,0 +1,47 @@
+name: Next-Work-flow
+
+on:
+   push:
+    branches: [ "main" ]
+   pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DB_URL: ${{ secrets.DB_URL }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      NEXTAUTH_GITHUB_ID: ${{ secrets.NEXTAUTH_GITHUB_ID }}
+      NEXTAUTH_GITHUB_SECRET: ${{ secrets.NEXTAUTH_GITHUB_SECRET }}
+      NEXTAUTH_GITHUB_TOKEN: ${{ secrets.NEXTAUTH_GITHUB_TOKEN }}
+      NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      NEXT_PUBLIC_GEMINI_API_KEY: ${{secrets.NEXT_PUBLIC_GEMINI_API_KEY}}
+      
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🟢 Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: ⚙️ Prisma generate
+        run: npm run migrate
+
+      - name: 🔨 Build project
+        run: npm run build
+
+
+
+
+        
