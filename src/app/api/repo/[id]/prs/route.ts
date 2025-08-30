@@ -28,7 +28,8 @@ export async function POST(req: Request, context: any) {
             }
         })
     
-        const userToken=account?.access_token || process.env.GITHUB_TOKEN;
+        const userToken =
+          account?.access_token || process.env.NEXTAUTH_GITHUB_TOKEN;
         const prs = await fetchGitHub(`GET /repos/${owner}/${repo}/pulls`,userToken,{
             owner: owner,
             repo: repo,

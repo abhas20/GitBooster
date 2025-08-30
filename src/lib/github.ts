@@ -5,7 +5,7 @@ export async function fetchGitHub(
   userToken?: string | null,
   params: Record<string, any> = {}
 ) {
-  const token = userToken || process.env.GITHUB_TOKEN;
+  const token = userToken || process.env.NEXTAUTH_GITHUB_TOKEN;
 
   if (!token) {
     throw new Error("GitHub token is not provided");
