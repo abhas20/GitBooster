@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String?   @unique
+  password      String 
+  avatarUrl     String?   
+  image         String?   
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+
+  Repo Repo[]
+}
+
+model Account {
+  id                 String   @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? 
+  access_token       String? 
+  expires_at         Int?     
+  token_type         String?  
+  scope              String?  
+  id_token           String?  
+  session_state      String?  
+  user               User     @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model Repo {
+  id        String   @id @default(cuid())
+  owner     String
+  name      String
+  fullName  String   
+  url       String   @unique
+  userId    String
+  user      User   @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  analyses  Analysis[]
+}
+
+model Analysis {
+  id           String   @id @default(cuid())
+  repo         Repo     @relation(fields: [repoId], references: [id], onDelete:Cascade )
+  repoId       String
+  prNumber     Int
+  title        String
+  author       String?
+  oneLine      String?
+  aiFull       Json?    // store raw LLM output
+  risk         String?  // Low/Medium/High
+  additions    Int?
+  deletions    Int?
+  changedFiles Int?
+  diffSnippet  String?  
+  createdAt    DateTime @default(now())
+
+  @@index([repoId, prNumber])
+  @@index([risk])
+}
