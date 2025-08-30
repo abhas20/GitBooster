@@ -6,11 +6,9 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: string; number: string } }
-) {
+export async function POST(req: NextRequest, context: any) {
   try {
+    const { params } = context as { params: { id: string; number: string } };
     const session = await getServerSession(authOptions);
     const email = session?.user?.email;
     if (!session || !email) {
