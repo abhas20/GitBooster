@@ -48,7 +48,7 @@ export const aiAnalysis = async (data: any, newQuestion:string[]) => {
    }
 }; 
 
-export const askAiDoubt = async (data: any, newQuestion: string,response:string[]) => {
+export const askAiDoubt = async (data: any, newQuestion: string) => {
   try {
     const systemInstruction = `You are an AI assistant that helps developers understand code changes in a pull request. 
       Analyze the provided pull request diff and answer the user's question based on the informaton you have.

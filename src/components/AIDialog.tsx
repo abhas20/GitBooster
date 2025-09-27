@@ -45,7 +45,7 @@ function AIDialog( data:any ) {
         setQuestionText([...questionText,newQuestion]);
         startTransition(async()=>{
             try {
-                const res=await askAiDoubt(data,newQuestion,response);
+                const res=await askAiDoubt(data,newQuestion);
                 setResponse((prev)=>[...prev,res]);
                 setTimeout(() => {
                   contentRef.current?.scrollTo({
