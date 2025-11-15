@@ -9,7 +9,7 @@ import { toast } from "sonner";
 
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  
   const [prs, setPrs] = useState<any[]>([]);
   const [repoLink, setRepoLink] = useState<string>("");
 
@@ -21,6 +21,7 @@ export default function Home() {
         return `${parts[0]}@${parts[1]}`; // "ownerName/repoName" to "ownerName-repoName"
       }
     } catch (err) {
+      console.log(err);
       return null;
     }
     return null;
@@ -30,10 +31,8 @@ export default function Home() {
   const parsedId = parseRepoId(repoLink);
   const handleFetchPRs = async () => {
     setLoading(true);
-    setError(null);
 
     if (!parsedId) {
-      setError("Invalid GitHub repository link.");
       toast.error("Invalid GitHub repository link.", {
         duration: 2000,
         position: "top-center",
@@ -69,7 +68,6 @@ export default function Home() {
       
     } catch (error) {
       console.log(error);
-      setError("Failed to fetch PRs. Please try again.");
       toast.error("Failed to fetch PRs. Please try again.", {
         duration: 2000,
         position: "top-center",

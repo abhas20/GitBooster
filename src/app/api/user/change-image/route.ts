@@ -1,7 +1,6 @@
 import { prisma } from "@/db/prisma";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import { getSession } from "next-auth/react";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface NewImage {

@@ -10,7 +10,7 @@ function Header() {
 
   const {data:session} =useSession();
 
-    let isUserLogged = session ? true:false;
+    const isUserLogged = session ? true:false;
     const [isLoading, setIsLoading] = useState(false);
 
   const handleLogout = async ()=>{
